@@ -1,0 +1,21 @@
+{
+  "name": "dictionary-api",
+  "version": "1.0.0",
+  "description": "The API provides users with an opportunity to store and retrieve a collection of words and their definitions.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "V1ktork",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.0"
+  }
+}
