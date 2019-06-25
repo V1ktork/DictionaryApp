@@ -5,36 +5,39 @@ const JWT_KEY = "YION1tf7w}%AKBTM{EH}dVdVdWyClgMK7JrhL6cJjhqfk$7E";
 
 const User = require("../models/user");
 
-exports.signup = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10, (err, hash) => {
-    if (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Необходимо заполнить все поля!",
-        error: err
-      });
-    } else {
-      const user = new User({
-        _id: new mongoose.Types.ObjectId(),
+exports.signup = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ login: req.body.login });
+    if (user) {
+      throw new Error("Пользователь с таким логином уже зарегистрирован.");
+    }
+
+    if (!req.body.login || !req.body.password) {
+      throw new Error("Необходимо заполнить все поля!");
+    }
+
+    const hash = await bcrypt.hash(req.body.password, 10);
+
+    if (hash) {
+      const newUser = new User({
         login: req.body.login,
         password: hash
-      })
-        .save()
-        .then(data => {
-          res.status(201).json({
-            success: true,
-            message: "Регистрация прошла успешно!",
-            data
-          });
-        })
-        .catch(err => {
-          res.status(500).json({
-            success: false,
-            error: err
-          });
-        });
+      });
+
+      const data = await newUser.save();
+
+      res.status(201).json({
+        success: true,
+        message: "Регистрация прошла успешно!",
+        data
+      });
     }
-  });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err
+    });
+  }
 };
 
 exports.login = (req, res, next) => {
@@ -45,6 +48,7 @@ exports.login = (req, res, next) => {
         bcrypt.compare(req.body.password, user.password, (err, result) => {
           if (err) {
             return res.status(401).json({
+              success: false,
               message: "Не удалось авторизоваться.",
               err
             });
@@ -53,7 +57,7 @@ exports.login = (req, res, next) => {
           if (result) {
             const token = jwt.sign(
               {
-                userId: user._id,
+                id: user._id,
                 login: user.login
               },
               JWT_KEY,
@@ -62,18 +66,20 @@ exports.login = (req, res, next) => {
 
             return res
               .status(200)
-              .header("x-auth", token)
+              .header("x-auth", "bearer " + token)
               .json({
                 message: "Вы успешно авторизованы!"
               });
           }
 
           res.status(401).json({
+            success: false,
             message: "Не удалось авторизоваться."
           });
         });
       } else {
         res.status(401).json({
+          success: false,
           message: "Не удалось авторизоваться."
         });
       }

@@ -5,14 +5,22 @@ const DictionaryController = require("../controllers/dictionary");
 
 router.get("/", checkAuth, DictionaryController.getAllWords);
 
-router.post("/", DictionaryController.postWord);
+router.get("/:partOfSpeech", checkAuth, DictionaryController.getPartOfSpeech);
 
-router.get("/:partOfSpeech", DictionaryController.getPartOfSpeech);
+router.get("/:partOfSpeech/:name", checkAuth, DictionaryController.getOneWord);
 
-router.get("/:partOfSpeech/:name", DictionaryController.getOneWord);
+router.post("/", checkAuth, DictionaryController.postWord);
 
-router.patch("/:partOfSpeech/:name", DictionaryController.updateWord);
+router.patch(
+  "/:partOfSpeech/:name",
+  checkAuth,
+  DictionaryController.updateWord
+);
 
-router.delete("/:partOfSpeech/:name", DictionaryController.deleteWord);
+router.delete(
+  "/:partOfSpeech/:name",
+  checkAuth,
+  DictionaryController.deleteWord
+);
 
 module.exports = router;

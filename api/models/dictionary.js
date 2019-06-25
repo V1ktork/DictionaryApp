@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const dictionarySchema = mongoose.Schema(
   {
-    _id: mongoose.Schema.Types.ObjectId,
-    name: { type: String, unique: true, required: true },
+    name: { type: String, required: true },
     translation: { type: String, required: true },
     partOfSpeech: { type: String, required: true },
     state: { type: String, default: "study" },
-    mistakeCounter: { type: Number, default: 0 }
+    mistakeCounter: { type: Number, default: 0 },
+    creator: { type: String, required: true }
   },
   {
     timestamps: true

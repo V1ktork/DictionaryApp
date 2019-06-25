@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     next();
   } catch (err) {
     return res.status(401).json({
-      message: "У вас нет доступа к данной странице."
+      message: "Вы не авторизованы для доступа к этой странице."
     });
   }
 };
