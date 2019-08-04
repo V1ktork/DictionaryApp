@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
-const Words = require("../models/dictionary");
+const mongoose = require('mongoose');
+const Words = require('../models/dictionary');
 
 exports.getAllWords = (req, res, next) => {
   const creator = req.userData.id;
   Words.find({ creator })
-    .select("-__v")
+    .select('-__v')
     .exec()
     .then(data => {
       const response = {
@@ -17,7 +17,7 @@ exports.getAllWords = (req, res, next) => {
       } else {
         res.status(200).json({
           message:
-            "Ваш словарь пустует и скучает. Добавьте несколько слов для начала работы!"
+            'Ваш словарь пустует и скучает. Добавьте несколько слов для начала работы!'
         });
       }
     })
@@ -34,7 +34,7 @@ exports.getPartOfSpeech = (req, res, next) => {
   const partOfSpeech = req.params.partOfSpeech;
 
   Words.find({ creator, partOfSpeech })
-    .select("-__v")
+    .select('-__v')
     .exec()
     .then(data => {
       const response = {
@@ -46,7 +46,7 @@ exports.getPartOfSpeech = (req, res, next) => {
         res.status(200).json(response);
       } else {
         res.status(404).json({
-          message: "Часть речи указана неверно, либо такой не существует."
+          message: 'Часть речи указана неверно, либо такой не существует.'
         });
       }
     })
@@ -63,14 +63,14 @@ exports.getOneWord = (req, res, next) => {
   const { partOfSpeech, name } = req.params;
 
   Words.findOne({ creator, partOfSpeech, name })
-    .select("-__v")
+    .select('-__v')
     .exec()
     .then(data => {
       if (data) {
         res.status(200).json(data);
       } else {
         res.status(404).json({
-          message: "Запрашиваемое слово ещё не добавлено."
+          message: 'Запрашиваемое слово ещё не добавлено.'
         });
       }
     })
@@ -91,14 +91,14 @@ exports.postWord = (req, res, next) => {
     .then(word => {
       if (word) {
         throw new Error(
-          "Это слово уже добавлено. Вы можете обновить его перевод, если хотите."
+          'Это слово уже добавлено. Вы можете обновить его перевод, если хотите.'
         );
       }
 
       const { name, translation, partOfSpeech } = req.body;
 
       if (!name || !translation || !partOfSpeech) {
-        throw new Error("Для добавления слова необходимо заполнить все поля.");
+        throw new Error('Для добавления слова необходимо заполнить все поля.');
       }
 
       const newWord = new Words({
@@ -137,7 +137,7 @@ exports.updateWord = (req, res, next) => {
   }
 
   if (isEmpty(props)) {
-    throw new Error("Заполните хотя бы одно поле для изменения слова.");
+    throw new Error('Заполните хотя бы одно поле для изменения слова.');
   }
 
   Words.updateOne({ creator, name }, { $set: props })
@@ -161,7 +161,6 @@ exports.deleteWord = (req, res, next) => {
   const name = req.params.name;
 
   Words.deleteOne({ creator, name })
-    .select("-__v")
     .exec()
     .then(data => {
       res.status(200).json({

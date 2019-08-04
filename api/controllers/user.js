@@ -1,19 +1,19 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const JWT_KEY = "YION1tf7w}%AKBTM{EH}dVdVdWyClgMK7JrhL6cJjhqfk$7E";
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT_KEY = 'YION1tf7w}%AKBTM{EH}dVdVdWyClgMK7JrhL6cJjhqfk$7E';
 
-const User = require("../models/user");
+const User = require('../models/user');
 
 exports.signup = async (req, res, next) => {
   try {
     const user = await User.findOne({ login: req.body.login });
     if (user) {
-      throw new Error("Пользователь с таким логином уже зарегистрирован.");
+      throw new Error('Пользователь с таким логином уже зарегистрирован.');
     }
 
     if (!req.body.login || !req.body.password) {
-      throw new Error("Необходимо заполнить все поля!");
+      throw new Error('Необходимо заполнить все поля!');
     }
 
     const hash = await bcrypt.hash(req.body.password, 10);
@@ -28,7 +28,7 @@ exports.signup = async (req, res, next) => {
 
       res.status(201).json({
         success: true,
-        message: "Регистрация прошла успешно!",
+        message: 'Регистрация прошла успешно!',
         data
       });
     }
@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
           if (err) {
             return res.status(401).json({
               success: false,
-              message: "Не удалось авторизоваться.",
+              message: 'Не удалось авторизоваться.',
               err
             });
           }
@@ -61,26 +61,29 @@ exports.login = (req, res, next) => {
                 login: user.login
               },
               JWT_KEY,
-              { expiresIn: "6h" }
+              { expiresIn: '6h' }
             );
 
             return res
               .status(200)
-              .header("x-auth", "bearer " + token)
+              .set({
+                'Access-Control-Expose-Headers': 'Access-Token',
+                'Access-Token': 'Bearer ' + token
+              })
               .json({
-                message: "Вы успешно авторизованы!"
+                message: 'Вы успешно авторизованы!'
               });
           }
 
           res.status(401).json({
             success: false,
-            message: "Не удалось авторизоваться."
+            message: 'Не удалось авторизоваться.'
           });
         });
       } else {
         res.status(401).json({
           success: false,
-          message: "Не удалось авторизоваться."
+          message: 'Не удалось авторизоваться.'
         });
       }
     })
