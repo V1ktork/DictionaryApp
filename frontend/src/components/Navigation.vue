@@ -1,9 +1,14 @@
 <template>
   <div id="nav">
     <router-link :to="{name: 'home'}">Главная</router-link>|
-    <router-link v-if="!authenticated" :to="{name: 'signup'}">Регистрация</router-link>|
-    <router-link v-if="!authenticated" :to="{name: 'login'}">Авторизация</router-link>
-    <button v-else @click="logout">Выход</button>
+    <template v-if="!authenticated">
+      <router-link :to="{name: 'signup'}">Регистрация</router-link>|
+      <router-link :to="{name: 'login'}">Авторизация</router-link>
+    </template>
+    <template v-else>
+      <router-link :to="{name: 'dictionary'}">Словарь</router-link>
+      <button @click="logout">Выход</button>
+    </template>
   </div>
 </template>
 
@@ -17,7 +22,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.commit("users/logout");
+      this.$store.dispatch("users/logout");
     }
   }
 };

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '../store/store';
 import Home from '@/views/Home.vue';
 import PageNotFound from '@/views/E404.vue';
 
@@ -32,12 +33,27 @@ export default new Router({
       component: () =>
         import(
           /* webpackChunkName: "dictionary" */ '@/components/Dictionary.vue'
-        )
+        ),
+      beforeEnter(from, to, next) {
+        if (store.getters['users/authenticated']) {
+          if (!store.state.dictionary.loaded) {
+            store.dispatch('dictionary/fetchAllWords');
+          }
+          next();
+        } else {
+          store.commit(
+            'setErrorMsg',
+            'Вы не авторизованы для доступа к этой странице.'
+          );
+          next({ name: 'home' });
+        }
+      }
     },
     {
       path: '*',
       name: 'pageNotFound',
-      component: PageNotFound
+      component: () =>
+        import(/* webpackChunkName: "page-not-found" */ '@/views/E404.vue')
     }
   ]
 });

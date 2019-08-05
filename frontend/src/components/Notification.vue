@@ -1,5 +1,5 @@
 <template>
-  <transition-group name="slide-fade" tag="div" class="notification">
+  <transition-group appear name="slide-fade" tag="div" class="notification">
     <div v-if="successMsg" key="success" class="alert alert-success alert-dismissible">
       <strong>{{ successMsg }}</strong>
       <button @click="clearSuccessMsg" type="button" class="close">
@@ -39,23 +39,29 @@ export default {
     })
   },
   watch: {
-    successMsg(val) {
-      if (val) {
-        clearTimeout(this.successTimeout);
+    successMsg: {
+      handler(val) {
+        if (val) {
+          clearTimeout(this.successTimeout);
 
-        this.successTimeout = setTimeout(() => {
-          this.clearSuccessMsg();
-        }, 5000);
-      }
+          this.successTimeout = setTimeout(() => {
+            this.clearSuccessMsg();
+          }, 5000);
+        }
+      },
+      immediate: true
     },
-    errorMsg(val) {
-      if (val) {
-        clearTimeout(this.errorTimeout);
+    errorMsg: {
+      handler(val) {
+        if (val) {
+          clearTimeout(this.errorTimeout);
 
-        this.errorTimeout = setTimeout(() => {
-          this.clearErrorMsg();
-        }, 5000);
-      }
+          this.errorTimeout = setTimeout(() => {
+            this.clearErrorMsg();
+          }, 5000);
+        }
+      },
+      immediate: true
     }
   }
 };

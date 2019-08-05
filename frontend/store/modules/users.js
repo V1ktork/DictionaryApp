@@ -14,6 +14,7 @@ export default {
     },
     logout(state) {
       state.userToken = null;
+
       if (localStorage.getItem('token')) {
         localStorage.removeItem('token');
       }
@@ -40,6 +41,10 @@ export default {
         .catch(error =>
           store.commit('setErrorMsg', error.message, { root: true })
         );
+    },
+    logout(store) {
+      store.commit('logout');
+      store.commit('dictionary/clearWords', {}, { root: true });
     }
   },
   getters: {

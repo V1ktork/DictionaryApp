@@ -8,19 +8,15 @@ Vue.config.productionTip = false;
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
-if (store.state.userToken) {
-  axios.defaults.headers.common['Authorization'] = store.state.userToken;
-}
-
 axios.interceptors.request.use(
-  function(config) {
-    // Do something before request is sent
+  config => {
+    let token = store.state.users.userToken;
+    if (token) {
+      config.headers['Authorization'] = token;
+    }
     return config;
   },
-  function(error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
 axios.interceptors.response.use(

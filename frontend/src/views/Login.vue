@@ -6,8 +6,11 @@
         <input type="text" name="password" id="password" v-model.trim="password">
         <input type="submit" value="Отправить" @click.prevent="sendData">
       </form>
+
       <h2 v-else>Вы уже авторизованы.</h2>
-      <router-link :to="{name: 'home'}">На главную</router-link>
+
+      <router-link :to="{name: 'home'}">← На главную</router-link>
+      <router-link v-if="!authenticated" :to="{name: 'signup'}">Регистрация</router-link>
     </main>
   </page-layout>
 </template>

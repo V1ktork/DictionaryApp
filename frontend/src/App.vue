@@ -1,8 +1,9 @@
 <template>
   <div id="app" class="container">
     <notification></notification>
-    
-    <router-view/>
+    <transition appear name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -31,9 +32,7 @@ body {
   position: relative;
 }
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #2c3e50;
 }
 #nav {
   padding: 30px;
@@ -44,5 +43,14 @@ body {
       color: #42b983;
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
