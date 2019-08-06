@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/store';
 import Home from '@/views/Home.vue';
-import PageNotFound from '@/views/E404.vue';
 
 Vue.use(Router);
 
@@ -13,7 +12,10 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        allowHeader: true
+      }
     },
     {
       path: '/user/signup',
@@ -34,6 +36,9 @@ export default new Router({
         import(
           /* webpackChunkName: "dictionary" */ '@/components/Dictionary.vue'
         ),
+      meta: {
+        allowHeader: true
+      },
       beforeEnter(from, to, next) {
         if (store.getters['users/authenticated']) {
           if (!store.state.dictionary.loaded) {

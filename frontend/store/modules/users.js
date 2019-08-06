@@ -18,15 +18,18 @@ export default {
       if (localStorage.getItem('token')) {
         localStorage.removeItem('token');
       }
+
+      router.replace({ name: 'home' });
     }
   },
   actions: {
     signup(store, userData) {
       axios
         .post('/user/signup', userData)
-        .then(res =>
-          store.commit('setSuccessMsg', res.data.message, { root: true })
-        )
+        .then(res => {
+          store.commit('setSuccessMsg', res.data.message, { root: true });
+          router.replace({ name: 'login' });
+        })
         .catch(error =>
           store.commit('setErrorMsg', error.message, { root: true })
         );

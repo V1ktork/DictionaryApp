@@ -4,7 +4,7 @@ import router from '@/router';
 import store from '../store/store';
 import axios from 'axios';
 
-Vue.config.productionTip = false;
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
@@ -38,6 +38,8 @@ axios.interceptors.response.use(
     }
   }
 );
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,

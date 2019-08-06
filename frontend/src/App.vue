@@ -1,6 +1,11 @@
 <template>
   <div id="app" class="container">
+    <keep-alive>
+      <navigation v-if="allowHeader"></navigation>
+    </keep-alive>
+
     <notification></notification>
+
     <transition appear name="fade" mode="out-in">
       <router-view/>
     </transition>
@@ -8,11 +13,18 @@
 </template>
 
 <script>
+import navigation from "@/components/Navigation";
 import notification from "@/components/Notification.vue";
 
 export default {
   components: {
+    navigation,
     notification
+  },
+  computed: {
+    allowHeader() {
+      return this.$route.meta.allowHeader;
+    }
   }
 };
 </script>
@@ -29,22 +41,23 @@ body {
   box-shadow: inset 0px 0px 90px rgba(0, 0, 0, 0.5);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
+  overflow: hidden;
 }
 #app {
-  text-align: center;
+  height: 100%;
+  position: relative;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.d-table {
+  display: table;
+  height: 100%;
+  width: 100%;
 }
-
+.login,
+.signup,
+.not-found {
+  display: table-cell;
+  vertical-align: middle;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.1s;

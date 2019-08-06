@@ -1,19 +1,7 @@
 <template>
-  <page-layout>
-    <div class="home">
-      <navigation></navigation>
-    </div>
-  </page-layout>
+  <main class="home"></main>
 </template>
 
 <script>
-import pageLayout from "@/layouts/PageLayout.vue";
-import navigation from "@/components/Navigation";
-
-export default {
-  components: {
-    pageLayout,
-    navigation
-  }
-};
+export default {};
 </script>

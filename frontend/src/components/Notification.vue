@@ -69,6 +69,13 @@ export default {
 
 <style lang="scss" scoped>
 .notification {
+  position: absolute;
+  min-width: 350px;
+  text-align: center;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
 }
 .slide-fade-enter-active,
 .slide-fade-leave-active {
@@ -82,6 +89,4 @@ export default {
   transform: translateX(30px);
   opacity: 0;
 }
-</style>
->
 </style>
