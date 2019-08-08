@@ -36,14 +36,25 @@ export default new Router({
         import(
           /* webpackChunkName: "dictionary" */ '@/components/Dictionary.vue'
         ),
+      children: [
+        {
+          path: ':partOfSpeech',
+          meta: {
+            allowHeader: true
+          }
+        },
+        {
+          path: ':partOfSpeech/:word',
+          meta: {
+            allowHeader: true
+          }
+        }
+      ],
       meta: {
         allowHeader: true
       },
-      beforeEnter(from, to, next) {
+      beforeEnter(to, from, next) {
         if (store.getters['users/authenticated']) {
-          if (!store.state.dictionary.loaded) {
-            store.dispatch('dictionary/fetchAllWords');
-          }
           next();
         } else {
           store.commit(

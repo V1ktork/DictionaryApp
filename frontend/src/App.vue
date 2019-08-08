@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <keep-alive>
-      <navigation v-if="allowHeader"></navigation>
+      <header-app v-if="allowHeader"></header-app>
     </keep-alive>
 
     <notification></notification>
@@ -9,17 +9,21 @@
     <transition appear name="fade" mode="out-in">
       <router-view/>
     </transition>
+
+    <footer-app></footer-app>
   </div>
 </template>
 
 <script>
-import navigation from "@/components/Navigation";
+import headerApp from "@/components/HeaderApp";
 import notification from "@/components/Notification.vue";
+import footerApp from "@/components/FooterApp";
 
 export default {
   components: {
-    navigation,
-    notification
+    headerApp,
+    notification,
+    footerApp
   },
   computed: {
     allowHeader() {
@@ -60,7 +64,7 @@ body {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.1s;
+  transition: all 0.1s;
 }
 .fade-enter,
 .fade-leave-to {

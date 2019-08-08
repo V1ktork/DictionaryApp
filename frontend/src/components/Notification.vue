@@ -46,7 +46,7 @@ export default {
 
           this.successTimeout = setTimeout(() => {
             this.clearSuccessMsg();
-          }, 5000);
+          }, 4000);
         }
       },
       immediate: true
@@ -58,7 +58,7 @@ export default {
 
           this.errorTimeout = setTimeout(() => {
             this.clearErrorMsg();
-          }, 5000);
+          }, 4000);
         }
       },
       immediate: true
