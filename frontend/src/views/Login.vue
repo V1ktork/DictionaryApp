@@ -4,7 +4,7 @@
       <div class="mx-auto col-md-6 col-lg-4 shadow p-4 bg-white rounded-lg">
         <h1 class="text-center">Авторизация</h1>
 
-        <h3 v-if="authenticated" class="my-5 text-center text-muted">Вы уже авторизованы.</h3>
+        <p v-if="authenticated" class="h4 my-5 text-center text-muted">Вы уже авторизованы.</p>
 
         <form v-else method="post">
           <div class="form-group">

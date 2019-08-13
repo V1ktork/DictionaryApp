@@ -7,6 +7,10 @@
     <notification></notification>
 
     <transition appear name="fade" mode="out-in">
+      <breadcrumbs v-if="allowBreadcrumbs"></breadcrumbs>
+    </transition>
+
+    <transition appear name="fade" mode="out-in">
       <router-view/>
     </transition>
 
@@ -16,18 +20,23 @@
 
 <script>
 import headerApp from "@/components/HeaderApp";
-import notification from "@/components/Notification.vue";
+import notification from "@/components/Notification";
+import breadcrumbs from "@/components/Breadcrumbs";
 import footerApp from "@/components/FooterApp";
 
 export default {
   components: {
     headerApp,
     notification,
+    breadcrumbs,
     footerApp
   },
   computed: {
     allowHeader() {
       return this.$route.meta.allowHeader;
+    },
+    allowBreadcrumbs() {
+      return this.$route.meta.allowBreadcrumbs;
     }
   }
 };
@@ -64,7 +73,7 @@ body {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.1s;
+  transition: all 0.15s;
 }
 .fade-enter,
 .fade-leave-to {

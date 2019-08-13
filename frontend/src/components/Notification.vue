@@ -72,7 +72,7 @@ export default {
   position: absolute;
   min-width: 350px;
   text-align: center;
-  top: 85px;
+  top: 83px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;

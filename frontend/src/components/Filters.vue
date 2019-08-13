@@ -44,12 +44,11 @@ export default {
       return inOrder ? result : result.reverse();
     },
     sortByDate(dateField, inOrder = true) {
-      const result = this.words.data.sort((a, b) => {
+      this.words.data.sort((a, b) => {
         const dateA = new Date(a[dateField]);
         const dateB = new Date(b[dateField]);
-        return dateA - dateB;
+        return inOrder ? dateA - dateB : dateB - dateA;
       });
-      return inOrder ? result : result.reverse();
     }
   }
 };

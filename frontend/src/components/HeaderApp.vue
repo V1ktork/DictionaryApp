@@ -1,6 +1,6 @@
 <template>
   <header class="pt-4">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-info shadow">
+    <nav class="navbar navbar-expand-sm navbar-dark shadow">
       <router-link :to="{name: 'home'}" class="navbar-brand">DictionaryApp</router-link>
       <button
         class="navbar-toggler"
@@ -97,8 +97,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.navbar-brand {
-  font-weight: bold;
+.navbar {
+  background-color: rgb(0, 132, 255);
+
+  .navbar-brand {
+    font-weight: bold;
+    color: #f1f1f1;
+  }
 }
 .navbar-nav {
   font-size: 18px;

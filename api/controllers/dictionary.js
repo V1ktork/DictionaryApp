@@ -16,6 +16,7 @@ exports.getAllWords = (req, res, next) => {
         res.status(200).json(response);
       } else {
         res.status(200).json({
+          empty: true,
           message:
             'Ваш словарь пустует и скучает. Добавьте несколько слов для начала работы!'
         });
@@ -24,7 +25,8 @@ exports.getAllWords = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };
@@ -46,14 +48,16 @@ exports.getPartOfSpeech = (req, res, next) => {
         res.status(200).json(response);
       } else {
         res.status(404).json({
-          message: 'Часть речи указана неверно, либо такой не существует.'
+          message:
+            'Часть речи указана неверно, либо не найдено соответствующих ей слов.'
         });
       }
     })
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };
@@ -67,7 +71,9 @@ exports.getOneWord = (req, res, next) => {
     .exec()
     .then(data => {
       if (data) {
-        res.status(200).json(data);
+        res.status(200).json({
+          data: [data]
+        });
       } else {
         res.status(404).json({
           message: 'Запрашиваемое слово ещё не добавлено.'
@@ -77,7 +83,8 @@ exports.getOneWord = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };
@@ -119,7 +126,8 @@ exports.postWord = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };
@@ -151,7 +159,8 @@ exports.updateWord = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };
@@ -171,7 +180,8 @@ exports.deleteWord = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };

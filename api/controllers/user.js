@@ -12,7 +12,7 @@ exports.signup = async (req, res, next) => {
       throw new Error('Пользователь с таким логином уже зарегистрирован.');
     }
 
-    if (!req.body.login || !req.body.password) {
+    if (!req.body.login.trim() || !req.body.password.trim()) {
       throw new Error('Необходимо заполнить все поля!');
     }
 
@@ -35,7 +35,8 @@ exports.signup = async (req, res, next) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      error: err
+      error: err,
+      message: err.message
     });
   }
 };
@@ -90,7 +91,8 @@ exports.login = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         success: false,
-        error: err
+        error: err,
+        message: err.message
       });
     });
 };

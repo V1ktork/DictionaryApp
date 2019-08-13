@@ -36,23 +36,31 @@ export default new Router({
         import(
           /* webpackChunkName: "dictionary" */ '@/components/Dictionary.vue'
         ),
+      meta: {
+        allowHeader: true,
+        allowBreadcrumbs: true,
+        crumbTitle: 'Словарь'
+      },
       children: [
         {
           path: ':partOfSpeech',
+          name: 'partOfSpeech',
           meta: {
-            allowHeader: true
-          }
-        },
-        {
-          path: ':partOfSpeech/:word',
-          meta: {
-            allowHeader: true
-          }
+            allowHeader: true,
+            allowBreadcrumbs: true,
+            crumbTitle: 'Часть речи'
+          },
+          children: [
+            {
+              path: ':word',
+              meta: {
+                allowHeader: true,
+                allowBreadcrumbs: true
+              }
+            }
+          ]
         }
       ],
-      meta: {
-        allowHeader: true
-      },
       beforeEnter(to, from, next) {
         if (store.getters['users/authenticated']) {
           next();
