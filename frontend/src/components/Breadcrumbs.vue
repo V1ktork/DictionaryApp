@@ -11,7 +11,7 @@
       >
         <a>{{ item.title }}</a>
       </router-link>
-      <li class="breadcrumb-item active" aria-current="page">Текущая страница</li>
+      <li class="breadcrumb-item active" aria-current="page">{{ currentTitle }}</li>
     </ol>
   </nav>
 </template>
@@ -19,6 +19,9 @@
 <script>
 export default {
   computed: {
+    currentTitle() {
+      return this.$route.meta.crumbTitle || "Текущая страница";
+    },
     breadcrumbs() {
       let pathList = [];
 

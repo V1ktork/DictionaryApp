@@ -1,35 +1,49 @@
 <template>
-  <div>
-    <button @click="sortByName" type="button" class="btn btn-primary">Filter</button>
-    <br>
-    <button @click="sortByName(false)" type="button" class="btn btn-primary">Filter Reverse</button>
-    <hr>
-    <button @click="sortByDate('createdAt')" type="button" class="btn btn-primary">Filter</button>
-    <br>
-    <button
-      @click="sortByDate('createdAt', false)"
-      type="button"
-      class="btn btn-primary"
-    >Filter Reverse</button>
-    <hr>
-    <button @click="sortByDate('updatedAt')" type="button" class="btn btn-primary">Filter</button>
-    <br>
-    <button
-      @click="sortByDate('updatedAt', false)"
-      type="button"
-      class="btn btn-primary"
-    >Filter Reverse</button>
+  <div class="filters">
+    <dropdown>
+      <template slot="title">Сортировать по:</template>
+
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </dropdown>
+
+    <dropdown>
+      <template slot="title">Фильтровать по:</template>
+
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </dropdown>
   </div>
 </template>
 
 <script>
+import dropdown from "@/components/Dropdown.vue";
+
 export default {
   props: ["words"],
+  components: {
+    dropdown
+  },
   data() {
     return {
-      sortOptions: []
+      sortOptions: [
+        {
+          name: false,
+          updateDate: false,
+          createDate: false
+        }
+      ],
+      filterOptions: [
+        {
+          partOfSpeech: false,
+          status: false
+        }
+      ]
     };
   },
+  computed: {},
   methods: {
     sortByName(inOrder = true) {
       const result = this.words.data.sort((a, b) => {

@@ -55,7 +55,8 @@ export default new Router({
               path: ':word',
               meta: {
                 allowHeader: true,
-                allowBreadcrumbs: true
+                allowBreadcrumbs: true,
+                crumbTitle: 'Слово'
               }
             }
           ]

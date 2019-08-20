@@ -6,7 +6,7 @@
 
     <notification></notification>
 
-    <transition appear name="fade" mode="out-in">
+    <transition appear name="fade">
       <breadcrumbs v-if="allowBreadcrumbs"></breadcrumbs>
     </transition>
 
@@ -37,6 +37,16 @@ export default {
     },
     allowBreadcrumbs() {
       return this.$route.meta.allowBreadcrumbs;
+    }
+  },
+  beforeMount() {
+    if (localStorage.getItem("token")) {
+      let payload = localStorage.getItem("token").split(".")[1];
+      let payloadDecoded = JSON.parse(window.atob(payload));
+
+      if (Math.floor(Date.now() / 1000) >= payloadDecoded.exp) {
+        this.$store.dispatch("users/logout");
+      }
     }
   }
 };

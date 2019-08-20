@@ -1,5 +1,5 @@
 <template>
-  <main class="dictionary">
+  <main class="dictionary row">
     <div v-if="loading" class="text-center">
       <div class="spinner-border text-primary" role="status">
         <span class="sr-only">Loading...</span>
@@ -7,51 +7,34 @@
     </div>
 
     <template v-else>
-      <div v-if="words.message" class="a">{{ words.message }}</div>
-      <div v-else class="b">
+      <div v-if="words.message" class="message">{{ words.message }}</div>
+
+      <div v-else class="content col-md-8">
         <filters :words="words"></filters>
-        {{ words.data }}
+
+        <table class="table table-hover">
+          <tbody>
+            <word v-for="oneWord in words.data" :word="oneWord" :key="oneWord.name"></word>
+          </tbody>
+        </table>
       </div>
-
-      <button
-        @click="modalVisible = !modalVisible"
-        type="button"
-        class="btn btn-primary"
-      >Launch demo modal</button>
-
-      <transition name="modal">
-        <keep-alive>
-          <modal
-            v-if="modalVisible"
-            :modalVisible="modalVisible"
-            @modal-close="modalVisible = false"
-          >
-            <template slot="title">My tytle</template>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, accusamus?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, accusamus?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, accusamus?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, accusamus?</p>
-          </modal>
-        </keep-alive>
-      </transition>
     </template>
   </main>
 </template>
 
 <script>
 import filters from "@/components/Filters.vue";
+import word from "@/components/Word.vue";
 import { mapState } from "vuex";
 
 export default {
   components: {
     filters,
-    modal: () =>
-      import(/* webpackChunkName: "modal" */ "@/components/Modal.vue")
+    word
   },
   data() {
     return {
-      words: null,
-      modalVisible: false
+      words: null
     };
   },
   computed: {
@@ -112,12 +95,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.2s ease-out;
-}
-.modal-enter,
-.modal-leave-to {
-  opacity: 0;
-}
 </style>
