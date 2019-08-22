@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import headerApp from "@/components/HeaderApp";
-import notification from "@/components/Notification";
-import breadcrumbs from "@/components/Breadcrumbs";
-import footerApp from "@/components/FooterApp";
+import headerApp from "@/components/layout/HeaderApp";
+import notification from "@/components/ux/Notification";
+import breadcrumbs from "@/components/ux/Breadcrumbs";
+import footerApp from "@/components/layout/FooterApp";
 
 export default {
   components: {

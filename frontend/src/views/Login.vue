@@ -10,35 +10,56 @@
           <div class="form-group">
             <label for="login">Логин</label>
             <input
+              v-model.trim="login"
+              @blur="$v.login.$touch()"
+              :class="{ 'is-invalid': $v.login.$error, 'is-valid': !$v.login.$error && $v.login.$dirty }"
               type="text"
-              name="login"
               id="login"
               class="form-control"
               aria-describedby="loginHelp"
               placeholder="Имя пользователя"
-              v-model.trim="login"
             >
-            <small id="loginHelp" class="form-text text-muted">От 4-х английских букв.</small>
+
+            <div class="invalid-feedback">
+              <div v-if="!$v.login.required">Поле обязательно для заполнения!</div>
+              <div
+                v-if="!$v.login.minLength || !$v.login.maxLength"
+              >Логин должен содержать от 4-х до 16-и символов.</div>
+              <div
+                v-if="$v.login.required && !$v.login.validLogin"
+              >Разрешены только латинские буквы и цифры.</div>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="password">Пароль</label>
             <input
-              type="text"
-              name="password"
+              v-model.trim="password"
+              @blur="$v.password.$touch()"
+              :class="{ 'is-invalid': $v.password.$error, 'is-valid': !$v.password.$error && $v.password.$dirty }"
+              type="password"
               id="password"
               class="form-control"
               aria-describedby="passwordHelp"
               placeholder="Ваш пароль"
-              v-model.trim="password"
             >
-            <small id="passwordHelp" class="form-text text-muted">Несколько букв тоже.</small>
+
+            <div class="invalid-feedback">
+              <div v-if="!$v.password.required">Поле обязательно для заполнения!</div>
+              <div
+                v-if="!$v.password.minLength || !$v.password.maxLength"
+              >Пароль должен содержать от 4-х до 16-и символов.</div>
+              <div
+                v-if="$v.password.required && !$v.password.validPassword"
+              >Разрешены только латинские буквы и цифры.</div>
+            </div>
           </div>
 
           <input
+            @click.prevent="sendData"
+            :disabled="$v.$invalid"
             type="submit"
             value="Отправить"
-            @click.prevent="sendData"
             class="btn btn-primary mb-3"
           >
         </form>
@@ -52,6 +73,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -71,6 +93,24 @@ export default {
         login: this.login,
         password: this.password
       });
+    }
+  },
+  validations: {
+    login: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(16),
+      validLogin(login) {
+        return /^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/.test(login);
+      }
+    },
+    password: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(16),
+      validPassword(password) {
+        return /[a-zA-Z0-9]/.test(password);
+      }
     }
   }
 };

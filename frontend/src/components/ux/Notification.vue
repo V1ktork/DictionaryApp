@@ -1,13 +1,14 @@
 <template>
   <transition-group appear name="slide-fade" tag="div" class="notification">
     <div v-if="successMsg" key="success" class="alert alert-success alert-dismissible">
-      <strong>{{ successMsg }}</strong>
+      {{ successMsg }}
       <button @click="clearSuccessMsg" type="button" class="close">
         <span>&times;</span>
       </button>
     </div>
+
     <div v-if="errorMsg" key="error" class="alert alert-danger alert-dismissible">
-      <strong>{{ errorMsg }}</strong>
+      {{ errorMsg }}
       <button @click="clearErrorMsg" type="button" class="close">
         <span>&times;</span>
       </button>
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-import store from "../../store/store";
+import store from "@/../store/store";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -58,7 +59,7 @@ export default {
 
           this.errorTimeout = setTimeout(() => {
             this.clearErrorMsg();
-          }, 4000);
+          }, 14000);
         }
       },
       immediate: true
@@ -76,6 +77,9 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
+}
+.alert {
+  font-weight: 500;
 }
 .slide-fade-enter-active,
 .slide-fade-leave-active {

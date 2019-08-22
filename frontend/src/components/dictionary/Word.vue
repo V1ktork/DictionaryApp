@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr :class="wordStateClass">
     <th scope="row">{{ word.name }}</th>
     <td>{{ word.translation }}</td>
     <td>{{ word.partOfSpeech }}</td>
@@ -27,13 +27,22 @@
 export default {
   components: {
     modal: () =>
-      import(/* webpackChunkName: "modal" */ "@/components/Modal.vue")
+      import(/* webpackChunkName: "modal" */ "@/components/ui/Modal.vue")
   },
   props: ["word"],
   data() {
     return {
       modalVisible: false
     };
+  },
+  computed: {
+    wordStateClass() {
+      return this.word.state === "struggle"
+        ? "table-warning"
+        : this.word.state === "learned"
+        ? "table-info"
+        : "";
+    }
   }
 };
 </script>

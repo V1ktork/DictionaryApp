@@ -1,5 +1,5 @@
 <template>
-  <main class="dictionary row">
+  <main class="dictionary col-lg-9 mx-auto">
     <div v-if="loading" class="text-center">
       <div class="spinner-border text-primary" role="status">
         <span class="sr-only">Loading...</span>
@@ -9,12 +9,21 @@
     <template v-else>
       <div v-if="words.message" class="message">{{ words.message }}</div>
 
-      <div v-else class="content col-md-8">
-        <filters :words="words"></filters>
+      <div v-else class="content shadow p-3 rounded-lg">
+        <filters :words="words" :quantity="quantity" @filtered="getFilteredWords"></filters>
 
         <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Слово</th>
+              <th scope="col">Перевод</th>
+              <th scope="col">Часть речи</th>
+              <th scope="col">Опции</th>
+            </tr>
+          </thead>
+
           <tbody>
-            <word v-for="oneWord in words.data" :word="oneWord" :key="oneWord.name"></word>
+            <word v-for="oneWord in filteredWords.data" :word="oneWord" :key="oneWord.name"></word>
           </tbody>
         </table>
       </div>
@@ -23,8 +32,8 @@
 </template>
 
 <script>
-import filters from "@/components/Filters.vue";
-import word from "@/components/Word.vue";
+import filters from "@/components/ux/Filters.vue";
+import word from "@/components/dictionary/Word.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -34,7 +43,10 @@ export default {
   },
   data() {
     return {
-      words: null
+      words: null,
+      filteredWords: {
+        data: null
+      }
     };
   },
   computed: {
@@ -45,7 +57,7 @@ export default {
       return this.words ? false : true;
     },
     quantity() {
-      return this.words.data ? this.words.data.length : 0;
+      return this.filteredWords.data ? this.filteredWords.data.length : 0;
     }
   },
   methods: {
@@ -62,13 +74,15 @@ export default {
       return this.allWords.data.filter(
         el => el.partOfSpeech === this.$route.params.partOfSpeech
       );
+    },
+    getFilteredWords(payload) {
+      this.filteredWords = payload;
     }
   },
   watch: {
-    /* При изменении маршрута или обновлении компонента вычисляем
-    передаваемый массив слов. Если на складе ещё нет данных, то запрашиваем их
-    с сервера и передаём компоненту дальше. Если данные есть
-    (массив всех слов не пустой), то фильтруем необходимые слова из него.
+    /* При обновлении компонента вычисляем передаваемый массив слов.
+    Если на складе ещё нет данных, то запрашиваем их с сервера.
+    Если массив данных есть, то фильтруем необходимые слова из него.
     */
     $route: {
       handler() {
@@ -95,4 +109,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.content {
+  background-color: #f1f1f1;
+}
 </style>

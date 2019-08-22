@@ -34,7 +34,7 @@ export default new Router({
       name: 'dictionary',
       component: () =>
         import(
-          /* webpackChunkName: "dictionary" */ '@/components/Dictionary.vue'
+          /* webpackChunkName: "dictionary" */ '@/components/dictionary/Dictionary.vue'
         ),
       meta: {
         allowHeader: true,
