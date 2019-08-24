@@ -1,5 +1,5 @@
 <template>
-  <main class="d-table">
+  <main class="content-centered">
     <div class="not-found">
       <div class="wrapper col-md-6 col-lg-4 mx-auto">
         <div class="left">
@@ -26,6 +26,10 @@ h1 {
 }
 p {
   font-size: 22px;
+}
+img {
+  min-width: 200px;
+  height: auto;
 }
 
 @media screen and (max-width: 540px) {

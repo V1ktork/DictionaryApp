@@ -59,7 +59,7 @@ export default {
 
           this.errorTimeout = setTimeout(() => {
             this.clearErrorMsg();
-          }, 14000);
+          }, 4000);
         }
       },
       immediate: true

@@ -1,20 +1,22 @@
 <template>
   <div id="app" class="container">
-    <keep-alive>
-      <header-app v-if="allowHeader"></header-app>
-    </keep-alive>
+    <div class="row">
+      <keep-alive>
+        <header-app v-if="allowHeader"></header-app>
+      </keep-alive>
 
-    <notification></notification>
+      <notification></notification>
 
-    <transition appear name="fade">
-      <breadcrumbs v-if="allowBreadcrumbs"></breadcrumbs>
-    </transition>
+      <transition appear name="fade">
+        <breadcrumbs v-if="allowBreadcrumbs"></breadcrumbs>
+      </transition>
 
-    <transition appear name="fade" mode="out-in">
-      <router-view/>
-    </transition>
+      <transition appear name="fade" mode="out-in">
+        <router-view/>
+      </transition>
 
-    <footer-app></footer-app>
+      <footer-app></footer-app>
+    </div>
   </div>
 </template>
 
@@ -55,31 +57,28 @@ export default {
 
 <style lang="scss">
 html,
-body {
+body,
+#app {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
 }
 body {
   background: linear-gradient(90deg, darken(#0fa, 15%), darken(#0fa, 8%));
   box-shadow: inset 0px 0px 90px rgba(0, 0, 0, 0.5);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 }
-#app {
-  height: 100%;
+.row {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
-.d-table {
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-.login,
-.signup,
-.not-found {
-  display: table-cell;
-  vertical-align: middle;
+.content-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
 }
 .fade-enter-active,
 .fade-leave-active {

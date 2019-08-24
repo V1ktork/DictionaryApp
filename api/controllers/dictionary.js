@@ -120,6 +120,7 @@ exports.postWord = (req, res, next) => {
     .then(data => {
       res.status(201).json({
         success: true,
+        message: `Слово ${name} успешно добавлено!`,
         data
       });
     })

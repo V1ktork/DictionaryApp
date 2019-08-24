@@ -1,7 +1,7 @@
 <template>
-  <main class="d-table">
-    <div class="signup">
-      <div class="mx-auto col-md-6 col-lg-4 shadow p-4 bg-white rounded-lg">
+  <main class="content-centered">
+    <div class="signup mx-auto col-md-6 col-lg-4">
+      <div class="shadow p-4 bg-white rounded-lg">
         <h1 class="text-center">Регистрация</h1>
 
         <p v-if="authenticated" class="h4 my-5 text-center text-muted">Вы уже авторизованы.</p>

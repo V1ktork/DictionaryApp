@@ -11,7 +11,10 @@ export default {
     },
     clearWords(state) {
       state.words = null;
-    }
+    },
+    addWord(state) {},
+    changeWord(state) {},
+    deleteWord(state) {}
   },
   actions: {
     fetchAllWords(store) {
@@ -41,6 +44,15 @@ export default {
             reject(error);
           });
       });
+    },
+    addWord(store) {
+      return new Promise((resolve, reject) => {});
+    },
+    changeWord(store) {
+      return new Promise((resolve, reject) => {});
+    },
+    deleteWord(store) {
+      return new Promise((resolve, reject) => {});
     }
   }
 };

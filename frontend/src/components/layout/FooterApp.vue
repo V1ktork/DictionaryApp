@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="footer">
     <a
       href="https://github.com/V1ktork/DictionaryApp"
       target="_blank"
@@ -9,9 +9,12 @@
 </template>
 
 <style lang="scss" scoped>
+.footer {
+  // padding-top: 8%;
+}
 .github-link {
   position: absolute;
-  bottom: 2%;
+  bottom: 20px;
   display: block;
   text-align: center;
   color: #0fa;

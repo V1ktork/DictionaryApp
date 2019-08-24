@@ -1,43 +1,34 @@
 <template>
-  <div class="filters mb-2">
-    <div class="left">
-      <span class="quantity badge badge-secondary">
-        Слов:
-        <strong>{{ quantity }}</strong>
-      </span>
-    </div>
+  <div class="right">
+    <dropdown>
+      <template slot="title">Сортировать по:</template>
 
-    <div v-show="quantity > 1" class="right">
-      <dropdown>
-        <template slot="title">Сортировать по:</template>
+      <button
+        v-for="(option, ind) in sortOptions"
+        :key="option.sortBy"
+        @click="sortMethod(option.sortBy, option.inOrder, ind)"
+        class="dropdown-item"
+      >
+        {{ option.title }}
+        <span class="triangle">{{ option.inOrder ? '&#9660;' : '&#9650;' }}</span>
+      </button>
+    </dropdown>
 
-        <button
-          v-for="(option, ind) in sortOptions"
-          :key="option.sortBy"
-          @click="sortMethod(option.sortBy, option.inOrder, ind)"
-          class="dropdown-item"
-        >
-          {{ option.title }}
-          <span class="triangle">{{ option.inOrder ? '&#9660;' : '&#9650;' }}</span>
-        </button>
-      </dropdown>
+    <dropdown :hideOnClick="false">
+      <template slot="title">Фильтровать по:</template>
 
-      <dropdown :hideOnClick="false">
-        <template slot="title">Фильтровать по:</template>
-
-        <div v-for="option in filterOptions" :key="option.filter" class="dropdown-item no-active">
-          <div class="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              v-model="option.active"
-              :id="option.filter"
-            >
-            <label class="custom-control-label" :for="option.filter">{{ option.title }}</label>
-          </div>
+      <div v-for="option in filterOptions" :key="option.filter" class="dropdown-item no-active">
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            v-model="option.active"
+            :id="option.filter"
+          >
+          <label class="custom-control-label" :for="option.filter">{{ option.title }}</label>
         </div>
-      </dropdown>
-    </div>
+      </div>
+    </dropdown>
   </div>
 </template>
 
@@ -45,7 +36,7 @@
 import dropdown from "@/components/ui/Dropdown.vue";
 
 export default {
-  props: ["words", "quantity"],
+  props: ["words"],
   components: {
     dropdown
   },
@@ -87,6 +78,19 @@ export default {
       ]
     };
   },
+  computed: {
+    filterList() {
+      let list = [];
+
+      this.filterOptions.forEach(el => {
+        if (el.active) {
+          list.push(el.filter);
+        }
+      });
+
+      return list;
+    }
+  },
   methods: {
     sortMethod(sortBy, order, ind) {
       sortBy === "name"
@@ -111,28 +115,30 @@ export default {
       this.words.data.sort((a, b) => {
         const dateA = new Date(a[dateField]);
         const dateB = new Date(b[dateField]);
-        return inOrder ? dateA - dateB : dateB - dateA;
+        return inOrder ? dateB - dateA : dateA - dateB;
       });
+    },
+    filterMethod() {
+      if (this.filterList.length < 1) {
+        this.$emit("filtered", this.words);
+      } else {
+        let result = this.words.data.filter(el => {
+          return this.filterList.some(criteria => {
+            return el.state === criteria;
+          });
+        });
+
+        this.$emit("filtered", { data: result });
+      }
     }
   },
   watch: {
     filterOptions: {
-      handler() {
-        let qwe = this.filterOptions.map(el => (el.active ? el.filter : null));
-        console.log(qwe);
-
-        let result = this.words.data.filter(el => {
-          return el.state === "study";
-        });
-
-        this.$emit("filtered", { data: result });
-      },
+      handler: "filterMethod",
       deep: true
     },
     words: {
-      handler() {
-        this.$emit("filtered", this.words);
-      },
+      handler: "filterMethod",
       deep: true,
       immediate: true
     }
@@ -141,15 +147,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 0.75rem;
-}
-.quantity {
-  font-size: 16px;
-}
 .dropdown:first-of-type {
   margin-right: 0.5rem;
 }
