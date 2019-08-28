@@ -15,7 +15,7 @@
     </dropdown>
 
     <dropdown :hideOnClick="false">
-      <template slot="title">Фильтровать по:</template>
+      <template slot="title">Отфильтровать:</template>
 
       <div v-for="option in filterOptions" :key="option.filter" class="dropdown-item no-active">
         <div class="custom-control custom-checkbox">
@@ -71,7 +71,7 @@ export default {
           active: false
         },
         {
-          title: "С трудностями",
+          title: "Тяжело запомнить",
           filter: "struggle",
           active: false
         }

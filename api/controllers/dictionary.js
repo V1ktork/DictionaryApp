@@ -135,7 +135,7 @@ exports.postWord = (req, res, next) => {
 
 exports.updateWord = (req, res, next) => {
   const creator = req.userData.id;
-  const name = req.params.name;
+  const { partOfSpeech, name } = req.params;
   const props = req.body;
 
   function isEmpty(obj) {
@@ -149,21 +149,60 @@ exports.updateWord = (req, res, next) => {
     throw new Error('Заполните хотя бы одно поле для изменения слова.');
   }
 
-  Words.updateOne({ creator, name }, { $set: props })
-    .exec()
-    .then(result => {
-      res.status(200).json({
-        success: true,
-        message: `Вы успешно изменили слово ${name}!`
+  if (name != props.name) {
+    Words.findOne({ creator, name: props.name })
+      .exec()
+      .then(word => {
+        if (word) {
+          throw new Error(
+            'Такое слово уже существует. Попробуйте изменить название.'
+          );
+        } else {
+          return Words.updateOne({ creator, name }, { $set: props }).exec();
+        }
+      })
+      .then(result => {
+        return Words.findOne({ creator, name: props.name })
+          .select('-__v')
+          .exec();
+      })
+      .then(data => {
+        res.status(200).json({
+          success: true,
+          data,
+          message: `Вы успешно изменили слово ${name}!`
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          success: false,
+          error: err,
+          message: err.message
+        });
       });
-    })
-    .catch(err => {
-      res.status(500).json({
-        success: false,
-        error: err,
-        message: err.message
+  } else {
+    Words.updateOne({ creator, name }, { $set: props })
+      .exec()
+      .then(result => {
+        return Words.findOne({ creator, name: props.name })
+          .select('-__v')
+          .exec();
+      })
+      .then(data => {
+        res.status(200).json({
+          success: true,
+          data,
+          message: `Вы успешно изменили слово ${name}!`
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          success: false,
+          error: err,
+          message: err.message
+        });
       });
-    });
+  }
 };
 
 exports.deleteWord = (req, res, next) => {

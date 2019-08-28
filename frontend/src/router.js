@@ -53,6 +53,7 @@ export default new Router({
           children: [
             {
               path: ':word',
+              name: 'word',
               meta: {
                 allowHeader: true,
                 allowBreadcrumbs: true,

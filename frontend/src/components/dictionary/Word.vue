@@ -1,11 +1,30 @@
 <template>
   <tr :class="wordStateClass">
-    <th scope="row">{{ word.name }}</th>
+    <router-link
+      :to="{name: 'word', params: {partOfSpeech: word.partOfSpeech, word: word.name}}"
+      tag="th"
+    >
+      <a class="link">{{ word.name }}</a>
+    </router-link>
     <td>{{ word.translation }}</td>
-    <td>{{ word.partOfSpeech }}</td>
+    <router-link :to="{name: 'partOfSpeech', params: {partOfSpeech: word.partOfSpeech}}" tag="td">
+      <a class="link">{{ word.partOfSpeech }}</a>
+    </router-link>
     <td class="actions">
-      <img class="change" src="@/assets/pencil.svg" alt="Изменить слово" title="Изменить слово">
-      <img class="delete" src="@/assets/trashcan.svg" alt="Удалить слово" title="Удалить слово">
+      <img
+        @click="$emit('change-word')"
+        class="change"
+        src="@/assets/pencil.svg"
+        alt="Изменить слово"
+        title="Изменить слово"
+      >
+      <img
+        @click="$emit('delete-word')"
+        class="delete"
+        src="@/assets/trashcan.svg"
+        alt="Удалить слово"
+        title="Удалить слово"
+      >
     </td>
   </tr>
 </template>
@@ -26,6 +45,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.link {
+  display: block;
+  color: inherit;
+  text-decoration: underline;
+
+  &:hover {
+    color: #0056b3;
+  }
+}
 .actions {
   padding: 5.5px 0;
 }
@@ -51,6 +79,12 @@ tr:hover .delete {
   }
   &:active {
     background-color: #e4e4e4;
+  }
+}
+@media screen and (max-width: 991px) {
+  .change,
+  .delete {
+    opacity: 1;
   }
 }
 </style>

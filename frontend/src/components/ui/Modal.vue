@@ -15,7 +15,7 @@
             <slot></slot>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <slot name="footer"></slot>
           </div>
         </div>
       </div>
@@ -40,6 +40,13 @@ export default {
   display: block;
   pointer-events: none;
   animation: slide-down 0.2s ease-out;
+}
+.modal-dialog {
+  max-width: 440px;
+}
+.modal-body {
+  max-height: 370px;
+  overflow-y: auto;
 }
 .modal-backdrop {
   opacity: 0.5;
