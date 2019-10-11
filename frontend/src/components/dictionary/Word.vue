@@ -6,9 +6,9 @@
     >
       <a class="link">{{ word.name }}</a>
     </router-link>
-    <td>{{ word.translation }}</td>
+    <td class="translation">{{ word.translation }}</td>
     <router-link :to="{name: 'partOfSpeech', params: {partOfSpeech: word.partOfSpeech}}" tag="td">
-      <a class="link">{{ word.partOfSpeech }}</a>
+      <a class="link part-of-speech">{{ word.partOfSpeech }}</a>
     </router-link>
     <td class="actions">
       <img
@@ -54,11 +54,20 @@ export default {
     color: #0056b3;
   }
 }
+.part-of-speech {
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: #005dc0;
+}
 .actions {
-  padding: 5.5px 0;
+  padding: 7.5px 0;
 }
 .change {
   margin-right: 3px;
+}
+th,
+.translation {
+  width: 30%;
 }
 tr:hover .change,
 tr:hover .delete {
@@ -67,8 +76,8 @@ tr:hover .delete {
 .change,
 .delete {
   box-sizing: content-box;
-  width: 26px;
-  height: 26px;
+  width: 27px;
+  height: 27px;
   cursor: pointer;
   padding: 5px;
   border-radius: 5px;

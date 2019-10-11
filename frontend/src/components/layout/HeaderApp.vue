@@ -52,17 +52,8 @@
             <router-link :to="{name: 'dictionary'}" tag="li" active-class="active" class="nav-item">
               <a class="nav-link">Словарь</a>
             </router-link>
-            <router-link :to="'/dictionary/noun'" tag="li" active-class="active" class="nav-item">
-              <a class="nav-link">sdw</a>
-            </router-link>
-            <router-link
-              :to="'/dictionary/noun/bully'"
-              tag="li"
-              active-class="active"
-              class="nav-item"
-            >
-              <a class="nav-link">sds</a>
-            </router-link>
+
+            <search></search>
 
             <button @click="logout" class="btn btn-secondary ml-3">Выход</button>
           </template>
@@ -74,7 +65,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import search from "@/components/ux/SearchBar.vue";
+
 export default {
+  components: {
+    search
+  },
   data() {
     return {
       navCollapsed: false

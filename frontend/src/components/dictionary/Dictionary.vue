@@ -46,15 +46,17 @@
 
               <tbody>
                 <word
-                  @change-word="changeWord(idx)"
-                  @delete-word="deleteWord(idx)"
-                  v-for="(oneWord, idx) in filteredWords.data"
+                  @change-word="changeWord(oneWord)"
+                  @delete-word="deleteWord(oneWord)"
+                  v-for="oneWord in wordsForCurrentPage.data"
                   :word="oneWord"
                   :key="oneWord.name"
                 ></word>
               </tbody>
             </table>
           </div>
+
+          <pagination :dataArray="filteredWords.data" @paginate="getWordsForCurrentPage"></pagination>
         </div>
       </template>
     </div>
@@ -71,6 +73,7 @@
             <div class="form-group">
               <label for="name">Слово:</label>
               <input
+                ref="word"
                 v-model.trim="wordInfo.name"
                 @blur="$v.wordInfo.name.$touch()"
                 :class="{ 'is-invalid': $v.wordInfo.name.$error, 'is-valid': !$v.wordInfo.name.$error && $v.wordInfo.name.$dirty }"
@@ -169,6 +172,7 @@
 
 <script>
 import filters from "@/components/ux/Filters.vue";
+import pagination from "@/components/ux/Pagination.vue";
 import word from "@/components/dictionary/Word.vue";
 import {
   alpha,
@@ -183,6 +187,7 @@ import { mapState } from "vuex";
 export default {
   components: {
     filters,
+    pagination,
     word,
     modal: () =>
       import(/* webpackChunkName: "modal" */ "@/components/ui/Modal.vue")
@@ -191,6 +196,9 @@ export default {
     return {
       words: null,
       filteredWords: {
+        data: null
+      },
+      wordsForCurrentPage: {
         data: null
       },
       wordInfo: {
@@ -266,6 +274,9 @@ export default {
     getFilteredWords(payload) {
       this.filteredWords = payload;
     },
+    getWordsForCurrentPage(payload) {
+      this.wordsForCurrentPage = payload;
+    },
     addWord() {
       for (const k in this.wordInfo) {
         this.wordInfo[k] = null;
@@ -273,25 +284,29 @@ export default {
       this.$v.$reset();
       this.modal = "add";
       this.modalVisible = true;
+
+      setTimeout(() => {
+        this.$refs.word.focus();
+      }, 100);
     },
     changeWord(word) {
       for (const k in this.wordInfo) {
-        this.wordInfo[k] = this.filteredWords.data[word][k];
+        this.wordInfo[k] = word[k];
       }
-      this.wordToChange = this.filteredWords.data[word];
+      this.wordToChange = word;
       this.$v.$reset();
       this.modal = "change";
       this.modalVisible = true;
+
+      setTimeout(() => {
+        this.$refs.word.focus();
+      }, 100);
     },
     deleteWord(word) {
-      this.$store
-        .dispatch("dictionary/deleteWord", this.filteredWords.data[word])
-        .then(res => {
-          let idx = this.words.data.findIndex(
-            el => el._id === this.filteredWords.data[word]._id
-          );
-          this.words.data.splice(idx, 1);
-        });
+      this.$store.dispatch("dictionary/deleteWord", word).then(res => {
+        let idx = this.words.data.findIndex(el => el._id === word._id);
+        this.words.data.splice(idx, 1);
+      });
     },
     submitAdd() {
       this.modalVisible = false;
@@ -331,7 +346,7 @@ export default {
       },
       translation: {
         ruLetters(translation) {
-          return /^[а-яА-Я]+$/.test(translation);
+          return /^[а-яА-Я ]+$/.test(translation);
         },
         required,
         maxLength: maxLength(30)
@@ -366,6 +381,9 @@ export default {
 }
 .content {
   width: 100%;
+}
+tbody {
+  font-size: 18px;
 }
 .filters {
   display: flex;
