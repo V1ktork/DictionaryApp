@@ -1,6 +1,6 @@
 <template>
   <header class="pt-4">
-    <nav class="navbar navbar-expand-sm navbar-dark shadow">
+    <nav class="navbar navbar-expand-md navbar-dark shadow">
       <router-link :to="{name: 'home'}" class="navbar-brand">DictionaryApp</router-link>
       <button
         class="navbar-toggler"
@@ -53,9 +53,13 @@
               <a class="nav-link">Словарь</a>
             </router-link>
 
+            <router-link :to="'/sds'" tag="li" active-class="active" class="nav-item">
+              <a class="nav-link">Практика</a>
+            </router-link>
+
             <search></search>
 
-            <button @click="logout" class="btn btn-secondary ml-3">Выход</button>
+            <button @click="logout" class="btn btn-secondary logout">Выход</button>
           </template>
         </ul>
       </div>
@@ -93,6 +97,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+header {
+  width: 100%;
+}
 .navbar {
   background-color: rgb(0, 132, 255);
 
@@ -103,5 +110,16 @@ export default {
 }
 .navbar-nav {
   font-size: 18px;
+}
+.logout {
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 767px) {
+  .logout {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 0;
+  }
 }
 </style>

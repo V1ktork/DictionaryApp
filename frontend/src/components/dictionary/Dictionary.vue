@@ -27,7 +27,7 @@
                 Слов:
                 <strong>{{ quantity }}</strong>
               </span>
-              <button @click="addWord" class="add-word ml-2 btn btn-sm btn-success">+ Добавить</button>
+              <button @click="addWord" class="add-word btn btn-sm btn-success">+ Добавить</button>
             </div>
 
             <filters :words="words" @filtered="getFilteredWords"></filters>
@@ -285,9 +285,9 @@ export default {
       this.modal = "add";
       this.modalVisible = true;
 
-      setTimeout(() => {
-        this.$refs.word.focus();
-      }, 100);
+      // setTimeout(() => {
+      //   this.$refs.word.focus();
+      // }, 100);
     },
     changeWord(word) {
       for (const k in this.wordInfo) {
@@ -298,9 +298,9 @@ export default {
       this.modal = "change";
       this.modalVisible = true;
 
-      setTimeout(() => {
-        this.$refs.word.focus();
-      }, 100);
+      // setTimeout(() => {
+      //   this.$refs.word.focus();
+      // }, 100);
     },
     deleteWord(word) {
       this.$store.dispatch("dictionary/deleteWord", word).then(res => {
@@ -404,6 +404,7 @@ tbody {
 }
 .add-word {
   font-weight: 500;
+  margin-left: 0.5rem;
 }
 .message .add-word {
   margin: 0 auto;
@@ -420,6 +421,15 @@ tbody {
 .modal-enter,
 .modal-leave-to {
   opacity: 0;
+}
+@media screen and (max-width: 767px) {
+  .left {
+    flex-wrap: wrap;
+  }
+  .add-word {
+    margin-top: 5px;
+    margin-left: 0;
+  }
 }
 @media screen and (max-width: 540px) {
   .message,

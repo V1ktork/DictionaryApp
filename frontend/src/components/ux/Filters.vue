@@ -160,4 +160,20 @@ export default {
 .custom-checkbox label {
   cursor: pointer;
 }
+@media screen and (max-width: 767px) {
+  .right {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 575px) {
+  .right {
+    text-align: center;
+  }
+  .dropdown:first-of-type {
+    margin-right: 0;
+  }
+  .dropdown:nth-child(2) {
+    margin-top: 5px;
+  }
+}
 </style>

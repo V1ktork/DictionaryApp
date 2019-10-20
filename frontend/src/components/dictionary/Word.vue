@@ -61,6 +61,7 @@ export default {
 }
 .actions {
   padding: 7.5px 0;
+  min-width: 77px;
 }
 .change {
   margin-right: 3px;

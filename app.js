@@ -13,7 +13,7 @@ mongoose.connect(
   }
 );
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -31,8 +31,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/dictionary', dictionaryRouter);
-app.use('/user', userRouter);
+app.use('/api/dictionary', dictionaryRouter);
+app.use('/api/user', userRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 app.use((req, res, next) => {
   const error = new Error('Запрашиваемая страница не найдена.');
