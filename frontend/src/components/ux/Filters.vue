@@ -1,7 +1,7 @@
 <template>
   <div class="right">
     <dropdown>
-      <template slot="title">Сортировать по:</template>
+      <template slot="title">Сортировать по</template>
 
       <button
         v-for="(option, ind) in sortOptions"
@@ -15,7 +15,7 @@
     </dropdown>
 
     <dropdown :hideOnClick="false">
-      <template slot="title">Отфильтровать:</template>
+      <template slot="title">Отфильтровать</template>
 
       <div v-for="option in filterOptions" :key="option.filter" class="dropdown-item no-active">
         <div class="custom-control custom-checkbox">

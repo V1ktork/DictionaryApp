@@ -94,7 +94,6 @@ export default {
     away() {
       this.touched = false;
       this.searchInput = "";
-      console.log("away");
     }
   }
 };

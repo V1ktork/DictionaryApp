@@ -53,7 +53,7 @@
               <a class="nav-link">Словарь</a>
             </router-link>
 
-            <router-link :to="'/sds'" tag="li" active-class="active" class="nav-item">
+            <router-link :to="{name: 'quiz'}" tag="li" active-class="active" class="nav-item">
               <a class="nav-link">Практика</a>
             </router-link>
 
@@ -120,6 +120,8 @@ header {
     width: 100px;
     margin-top: 10px;
     margin-left: 0;
+    align-self: flex-end;
+    min-width: 185px;
   }
 }
 </style>

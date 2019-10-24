@@ -76,6 +76,28 @@ export default new Router({
       }
     },
     {
+      path: '/quiz',
+      name: 'quiz',
+      component: () =>
+        import(/* webpackChunkName: "quiz" */ '@/components/quiz/Quiz.vue'),
+      meta: {
+        allowHeader: true,
+        allowBreadcrumbs: true,
+        crumbTitle: 'Практика'
+      },
+      beforeEnter(to, from, next) {
+        if (store.getters['users/authenticated']) {
+          next();
+        } else {
+          store.commit(
+            'setErrorMsg',
+            'Вы не авторизованы для доступа к этой странице.'
+          );
+          next({ name: 'home' });
+        }
+      }
+    },
+    {
       path: '*',
       name: 'pageNotFound',
       component: () =>
