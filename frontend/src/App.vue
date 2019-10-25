@@ -1,9 +1,11 @@
 <template>
   <div id="app" class="container">
     <div class="row">
-      <keep-alive>
-        <header-app v-if="allowHeader"></header-app>
-      </keep-alive>
+      <transition appear name="fade">
+        <keep-alive>
+          <header-app v-if="allowHeader"></header-app>
+        </keep-alive>
+      </transition>
 
       <notification></notification>
 
