@@ -1,6 +1,6 @@
 # DictionaryApp
 
-Are you looking for the application to help you learn vocabulary in a simple way? We've got you covered! DictionaryApp provides users with opportunity to store and retrieve collections of words and their definitions. You can also practice vocabulary by taking interactive quizs.
+Are you looking for the application to help you learn vocabulary in a simple way? We've got you covered! DictionaryApp provides users with opportunity to store and retrieve a collection of words and their definitions. You can also practice vocabulary by taking interactive quizs.
 
 ## Features
 
@@ -15,7 +15,7 @@ Are you looking for the application to help you learn vocabulary in a simple way
 
 To get started follow the instructions below.
 
-### Try it now
+### See it now
 
 The application is hosted online so that you could easily access it. [**Here is the link.**](https://dictionaryapp-v1ktork.appspot.com/)  
 You might want to use an existing account with some words added for you beforehand. Feel free to use the following one:
