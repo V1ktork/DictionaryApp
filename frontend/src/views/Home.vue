@@ -50,7 +50,7 @@ export default {
 }
 .subtitle {
   text-shadow: 1px 1px 3px #000;
-  font-size: 22px;
+  font-size: 23px;
   letter-spacing: 0.3px;
   line-height: 30px;
   margin-bottom: 90px;
@@ -59,7 +59,7 @@ export default {
   margin: 0 auto 80px;
   display: block;
   max-width: 290px;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 500;
 }
 @media screen and (max-width: 767px) {

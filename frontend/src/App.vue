@@ -82,6 +82,10 @@ body {
   justify-content: center;
   flex: 1;
 }
+.form-control.is-invalid,
+.form-control.is-valid {
+  background-position: calc(100% - 9px) 50%;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.15s;

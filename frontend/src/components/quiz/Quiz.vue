@@ -12,7 +12,7 @@
           <p
             class="text"
           >Все слова, отмеченные как "Выученные" исключаются из тренировки. Вы ведь уже изучили их, не так ли? Отметьте желаемые опции и в бой.</p>
-          <p>
+          <p class="select">
             Выберите количество слов для тренировки:
             <select
               class="custom-select"
@@ -203,13 +203,22 @@ export default {
   font-size: 20px;
   margin-bottom: 35px;
 }
+.select {
+  text-align: center;
+}
+.custom-select {
+  width: auto;
+  min-width: 200px;
+}
 .custom-checkbox {
   text-align: right;
   margin-bottom: 40px;
+  text-align: center;
 }
 .custom-control-label {
   font-size: 18px;
   line-height: 22px;
+  cursor: pointer;
 }
 p {
   font-size: 18px;

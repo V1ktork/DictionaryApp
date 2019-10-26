@@ -18,7 +18,7 @@ To get started follow the instructions below.
 ### Try it now
 
 The application is hosted online so that you could easily access it. [**Here is the link.**](https://dictionaryapp-v1ktork.appspot.com/)  
-You might want to use an existing account with some words added for you beforehand. Feel free to use the following one:
+You might want to use an existing account with some data added for you beforehand. Feel free to use the following one:
 
 ```
 Login: test
